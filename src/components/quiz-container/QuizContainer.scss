@@ -2,13 +2,11 @@
 
 .QuizContainer {
   position: relative;
-  width: 464px;
+  max-width: 464px;
   height: 515px;
-  top: 252px;
   left: 0;
   right: 0;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0rem 2rem 0rem 2rem;
   background: #ffffff;
   border-radius: 24px;
   font-family: $main-font;
@@ -65,6 +63,7 @@
       &:hover {
         background-color: $hover_answer-color;
         color: #ffffff;
+        border: none;
       }
       .answer-char {
         margin-left: 19px;

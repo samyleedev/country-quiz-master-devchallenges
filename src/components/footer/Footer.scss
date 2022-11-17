@@ -1,0 +1,15 @@
+@import "../../variables.scss";
+
+.Footer {
+  position: absolute;
+  bottom: 0px;
+  height: 17px;
+  text-align: center;
+  font-size: 14px;
+  color: $font-color1;
+  margin: 2rem;
+
+  span {
+    font-weight: bold;
+  }
+}

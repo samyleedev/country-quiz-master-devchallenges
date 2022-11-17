@@ -1,5 +1,9 @@
 .App {
-  position: relative;
+  // position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
   background-image: url("../public/background.png");
