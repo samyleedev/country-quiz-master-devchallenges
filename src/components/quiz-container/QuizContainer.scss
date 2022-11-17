@@ -1,0 +1,81 @@
+@import "../../variables.scss";
+
+.QuizContainer {
+  position: relative;
+  width: 464px;
+  height: 515px;
+  top: 252px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  background: #ffffff;
+  border-radius: 24px;
+  font-family: $main-font;
+
+  h1 {
+    color: $font-color1;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 36px;
+    line-height: 54px;
+    position: absolute;
+    top: -64px;
+  }
+
+  img {
+    width: 162px;
+    height: 116px;
+    position: absolute;
+    right: 0;
+    top: -74px;
+  }
+
+  .main-container {
+    padding-left: 38px;
+    padding-right: 38px;
+    padding-top: 68px;
+    padding-bottom: 68px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    .question {
+      font-size: 24px;
+      line-height: 36px;
+      font-weight: bold;
+      font-family: $main-font;
+      color: $font-color2;
+      margin-bottom: 32px;
+    }
+    .answers-container {
+      height: 100%;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: space-between;
+    }
+    .answer-item {
+      height: 56px;
+      border: 2px solid $answers-color;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      color: $answers-color;
+      cursor: pointer;
+      &:hover {
+        background-color: $hover_answer-color;
+        color: #ffffff;
+      }
+      .answer-char {
+        margin-left: 19px;
+        margin-right: 45px;
+        font-size: 24px;
+        line-height: 36px;
+      }
+      .answer-content {
+        font-size: 18px;
+        line-height: 27px;
+      }
+    }
+  }
+}
