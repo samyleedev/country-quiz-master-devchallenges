@@ -23,7 +23,7 @@
     top: -64px;
   }
 
-  img {
+  .logo {
     width: 162px;
     height: 116px;
     position: absolute;
@@ -48,6 +48,13 @@
       font-family: $main-font;
       color: $font-color2;
       margin-bottom: 32px;
+
+      .flag {
+        width: 100px;
+        height: auto;
+        margin-right: 1rem;
+        border: 1px solid black;
+      }
     }
     .answers-container {
       height: 311px;
@@ -103,7 +110,9 @@
     justify-content: center;
     align-items: center;
     margin: 24px 0 0 0;
-    width: 116px;
+    width: fit-content;
+    padding: 1rem;
+    min-width: 116px;
     height: 56px;
     border: none;
     border-radius: 12px;
@@ -115,5 +124,46 @@
     line-height: 27px;
     cursor: pointer;
     box-shadow: 0px 2px 4px rgba(252, 168, 47, 0.4);
+  }
+  .gameover {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    .results-image {
+      margin-bottom: 3rem;
+    }
+    .points {
+      font-size: 36px;
+      color: $font-color3;
+    }
+
+    .body-results {
+      margin-bottom: 3rem;
+    }
+    .try-again-btn {
+      display: flex;
+
+      justify-content: center;
+      align-items: center;
+      margin: 24px 0 0 0;
+      width: fit-content;
+      padding: 1rem;
+      min-width: 116px;
+      height: 56px;
+      border: none;
+      border-radius: 12px;
+      background-color: #ffffff;
+      color: $font-color2;
+      border: 1px solid $font-color2;
+      font-family: $main-font;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 27px;
+      cursor: pointer;
+      box-shadow: 0px 2px 4px rgba(252, 168, 47, 0.4);
+    }
+    .body-results {
+      text-align: center;
+    }
   }
 }

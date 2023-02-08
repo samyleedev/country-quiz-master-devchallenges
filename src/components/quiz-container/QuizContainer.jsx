@@ -1,127 +1,94 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import "./QuizContainer.scss";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCountries,
+  selectError,
+  selectStatus,
+  selectHasPlayed,
+  selectQuestionCountriesAndAnswer,
+  correctAnswer,
+  selectIsCorrect,
+  selectSelectedCountryId,
+  nextQuestion,
+  selectIsGameOver,
+  selectPoints,
+  restartGame,
+  selectQuestionNumber,
+} from "../../redux/slices/countries.slice";
 
-const randomCountryIndex = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
 const QuizContainer = () => {
-  const [countriesArray, setCountriesArray] = useState(null);
-  const [questionNumber, setQuestionNumber] = useState(1);
-  const [points, setPoints] = useState(0);
-  const [gameMode, setGameMode] = useState("findCapital");
-  const [hasPlayed, setHasPlayed] = useState(false);
-  const [correctAnswer, setCorrectAnswer] = useState(null);
-  const [wrongAnswer, setWrongAnswer] = useState(null);
-  const [countryChosenInTheArray, setCountryChosenInTheArray] = useState(null);
+  const dispatch = useDispatch();
 
-  const getNewCountriesArray = async () => {
-    const { data } = await axios.get("https://restcountries.com/v3.1/all");
-    const countries = [];
+  const status = useSelector(selectStatus);
+  const error = useSelector(selectError);
+  const hasPlayed = useSelector(selectHasPlayed);
+  const isCorrect = useSelector(selectIsCorrect);
+  const isGameOver = useSelector(selectIsGameOver);
+  const points = useSelector(selectPoints);
+  const selectedCountryId = useSelector(selectSelectedCountryId);
+  const questionNumber = useSelector(selectQuestionNumber);
 
-    for (let i = 0; countries.length < 4; i++) {
-      const indexCountry = randomCountryIndex(0, 250);
-      // const indexCountry = randomCountryIndex(0, 5);
-      // const isAlreadyInTheArray =
-      //   indexCountry === countries.find((country) => country.id);
+  const { questionCountries, answerCountry } = useSelector(
+    selectQuestionCountriesAndAnswer
+  );
 
-      // while (isAlreadyInTheArray) {
-      //   indexCountry = randomCountryIndex(0, 5);
-      // }
-
-      countries.push({
-        id: indexCountry,
-        name: data[indexCountry].name.common,
-        capital: data[indexCountry].capital[0],
-        flag: data[indexCountry].flags.png,
-      });
-    }
-
-    setCountriesArray(countries);
-    setCountryChosenInTheArray(randomCountryIndex(0, countries.length - 1));
-  };
-
-  const correctAnswers = (index) => {
-    setHasPlayed(true);
-
-    const { name, capital, flag } = countriesArray[index];
-
-    if (name === countriesArray[countryChosenInTheArray].name) {
-      setCorrectAnswer(index);
-      setPoints(points + 1);
-    } else {
-      setWrongAnswer(index);
-      setCorrectAnswer(
-        countriesArray.findIndex(
-          (country) => country.id === countriesArray[countryChosenInTheArray].id
-        )
-      );
-    }
-  };
-
-  const goToNextQuestion = () => {
-    setQuestionNumber(questionNumber + 1);
-  };
-
-  // Start of the game
   useEffect(() => {
-    getNewCountriesArray();
-  }, []);
-
-  // useEffect(() => {
-  //   if (countriesArray) {
-  //     const chosenCountry =
-  //       countriesArray[randomCountryIndex(0, countriesArray.length)];
-
-  //     setCountryChosenInTheArray(chosenCountry);
-  //   }
-  // }, [countriesArray]);
-
-  // New question
-  useEffect(() => {
-    setHasPlayed(false);
-    setCorrectAnswer(null);
-    setWrongAnswer(null);
-    setCountriesArray(null);
-    getNewCountriesArray();
-  }, [questionNumber]);
-  console.log({ countriesArray });
-  console.log({ countryChosenInTheArray });
+    if (status === "idle") {
+      dispatch(fetchCountries());
+    }
+  }, [status, dispatch]);
 
   return (
     <div className="QuizContainer">
       <h1>Country Quiz</h1>
-      <img src="../../../undraw_adventure_4hum 1.svg" alt="Logo" />
+      <img
+        className="logo"
+        src="../../../undraw_adventure_4hum 1.svg"
+        alt="Logo"
+      />
       <div className="main-container">
-        {countriesArray && countryChosenInTheArray ? (
+        {status === "loading" && <p>"Chargement..."</p>}
+        {status === "succeeded" && !isGameOver && (
           <>
             {questionNumber % 2 === 0 ? (
               <p className="question">
-                Which is the flag of{" "}
-                {countriesArray[countryChosenInTheArray].name}
+                {answerCountry?.capital} is the capital of
               </p>
             ) : (
-              <p className="question">
-                {countriesArray[countryChosenInTheArray].capital} is the capital
-                of
-              </p>
+              <div className="question">
+                <img
+                  className="flag"
+                  src={answerCountry?.flag}
+                  alt={answerCountry?.name}
+                />
+                <p>Which country does this flag belong to ?</p>
+              </div>
             )}
 
             <div className="answers-container">
-              {countriesArray.map(({ name, capital, flag }, index) => (
+              {questionCountries.map(({ id, name, capital, flag }, index) => (
                 <div
                   className={`answer-item ${
-                    correctAnswer === index ? "correct" : ""
-                  } ${wrongAnswer === index ? "wrong" : ""}`}
-                  key={index}
-                  onClick={!hasPlayed ? () => correctAnswers(index) : null}
+                    (isCorrect && selectedCountryId === id) ||
+                    (hasPlayed && answerCountry.id === id)
+                      ? "correct"
+                      : ""
+                  } ${
+                    isCorrect === false && selectedCountryId === id
+                      ? "wrong"
+                      : ""
+                  }`}
+                  key={id}
+                  onClick={
+                    !hasPlayed
+                      ? () => dispatch(correctAnswer({ answerCountry, id }))
+                      : null
+                  }
                 >
                   <p className="answer-char">{"ABCD"[index]}</p>
-                  {questionNumber % 2 === 0 ? (
-                    <img className="answer-content" src={flag} />
-                  ) : (
-                    <p className="answer-content">{name}</p>
-                  )}
+
+                  <p className="answer-content">{name}</p>
                 </div>
               ))}
             </div>
@@ -129,15 +96,37 @@ const QuizContainer = () => {
               <button
                 className="next-btn"
                 type="button"
-                onClick={() => goToNextQuestion()}
+                onClick={() => dispatch(nextQuestion())}
               >
                 Next
               </button>
             )}
           </>
-        ) : (
-          ""
         )}
+        {isGameOver && (
+          <div className="gameover">
+            <img
+              className="results-image"
+              src="../../../undraw_winners_ao2o 2.svg"
+            />
+            <div className="body-results">
+              <h2>Results</h2>
+              <p>
+                You got <span className="points">{points}</span>
+                {points > 1 ? " corrects answers" : " correct answer"}
+              </p>
+            </div>
+
+            <button
+              className="try-again-btn"
+              type="button"
+              onClick={() => dispatch(restartGame())}
+            >
+              Try again
+            </button>
+          </div>
+        )}
+        {error && <p>{error}</p>}
       </div>
     </div>
   );
