@@ -1,0 +1,45 @@
+@import "../../variables.scss";
+
+.AnswerItem {
+  height: 56px;
+  border: 2px solid $answers-color;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  color: $answers-color;
+  cursor: pointer;
+  &:hover {
+    background-color: $hover_answer-color;
+    color: #ffffff;
+    border: none;
+  }
+  .answer-char {
+    margin-left: 19px;
+    margin-right: 45px;
+    font-size: 24px;
+    line-height: 36px;
+  }
+  .answer-content {
+    font-size: 18px;
+    line-height: 27px;
+    position: inherit;
+  }
+}
+
+.correct {
+  background-color: $correct_answer-color;
+  color: #ffffff !important;
+  border: none !important;
+  &:hover {
+    background-color: $correct_answer-color;
+  }
+}
+.wrong {
+  background-color: $wrong_answer-color;
+  color: #ffffff !important;
+  border: none !important;
+  &:hover {
+    background-color: $wrong_answer-color;
+  }
+}

@@ -1,0 +1,8 @@
+@import "../../variables.scss";
+
+.AnswersContainer {
+  height: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
