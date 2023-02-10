@@ -1,0 +1,17 @@
+@import "../../variables.scss";
+
+.Question {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: bold;
+  font-family: $main-font;
+  color: $font-color2;
+  margin-bottom: 1rem;
+
+  .flag {
+    width: 100px;
+    height: auto;
+    margin-right: 1rem;
+    border: 1px solid black;
+  }
+}

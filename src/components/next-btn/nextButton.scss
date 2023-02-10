@@ -1,0 +1,21 @@
+@import "../../variables.scss";
+.NextButton {
+  display: flex;
+  align-self: flex-end;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 1rem;
+  min-width: 116px;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  background-color: $hover_answer-color;
+  color: #ffffff;
+  font-family: $main-font;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(252, 168, 47, 0.4);
+}
