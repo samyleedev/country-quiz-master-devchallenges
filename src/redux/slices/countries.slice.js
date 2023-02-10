@@ -47,15 +47,17 @@ const countriesSlice = createSlice({
         state.points += 1;
       } else {
         state.isCorrect = false;
-        state.isGameOver = true;
       }
     },
     nextQuestion(state, action) {
-      if (!state.isGameOver) {
+      if (state.isCorrect) {
         state.questionNumber += 1;
         state.selectedCountryId = null;
         state.hasPlayed = false;
         state.isCorrect = null;
+      }
+      if (!state.isCorrect && state.hasPlayed) {
+        state.isGameOver = true;
       }
     },
     restartGame: () => initialState,
