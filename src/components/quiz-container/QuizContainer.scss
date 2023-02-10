@@ -5,13 +5,17 @@
 
   width: 464px;
   height: auto;
-
-  left: 0;
-  right: 0;
-  margin: 0rem 2rem 0rem 2rem;
+  // margin: 0rem 2rem 0rem 2rem;
   background: #ffffff;
   border-radius: 24px;
   font-family: $main-font;
+  @media (max-width: 600px) {
+    height: 400px;
+  }
+  @media (max-width: 600px) {
+    width: 300px;
+    height: auto;
+  }
 
   h1 {
     color: $font-color1;
@@ -34,7 +38,7 @@
   .main-container {
     padding-left: 32px;
     padding-right: 32px;
-    padding-top: 68px;
+    padding-top: 24px;
     padding-bottom: 24px;
 
     height: auto;
@@ -47,7 +51,7 @@
       font-weight: bold;
       font-family: $main-font;
       color: $font-color2;
-      margin-bottom: 32px;
+      margin-bottom: 1rem;
 
       .flag {
         width: 100px;
@@ -57,7 +61,7 @@
       }
     }
     .answers-container {
-      height: 311px;
+      height: auto;
       display: flex;
       flex-flow: column nowrap;
       justify-content: space-between;
@@ -65,6 +69,7 @@
     .answer-item {
       height: 56px;
       border: 2px solid $answers-color;
+      margin-bottom: 1rem;
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -109,7 +114,7 @@
     align-self: flex-end;
     justify-content: center;
     align-items: center;
-    margin: 24px 0 0 0;
+
     width: fit-content;
     padding: 1rem;
     min-width: 116px;
